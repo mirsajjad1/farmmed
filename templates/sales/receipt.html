@@ -1,0 +1,12 @@
+<h2>Receipt</h2>
+
+<p>Sale ID: {{ sale.id }}</p>
+<p>Total: {{ sale.total_amount }}</p>
+
+<ul>
+{% for item in sale.items.all %}
+    <li>{{ item.medicine.name }} - {{ item.quantity }} x {{ item.price }}</li>
+{% endfor %}
+</ul>
+
+<a href="/sales/create/">New Sale</a>

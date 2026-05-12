@@ -1,0 +1,20 @@
+{% comment %} {% extends 'base.html' %}
+
+{% block content %}
+<h2>Create Sale</h2>
+<section class="text-center mx-auto">
+<form method="post"  >
+    {% csrf_token %}
+
+    {% for med in medicines %}
+        <div>
+            <label>{{ med.name }} (Stock: {{ med.stock }})</label>
+            <input type="hidden" name="medicine" value="{{ med.id }}">
+            <input type="number" name="quantity" placeholder="Quantity">
+        </div>
+    {% endfor %}
+
+    <button type="submit">Complete Sale</button>
+</form>
+</section>
+{% endblock %} {% endcomment %}

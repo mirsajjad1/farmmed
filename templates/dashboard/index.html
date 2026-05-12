@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{%block content %}
+
+<div class="row g-3">
+
+    
+    {% comment %} total medicine card {% endcomment %}
+<div class="col-md-3">
+        <div class="card border-0 bg-primary bg-gradient shadow-sm p-4 rounded-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted small fw-bold">📦 Inventory</span>
+                <span class="badge bg-success-subtle text-success"><i class="bi bi-link-45deg"></i></span>
+            </div>
+            <h3 class="fw-bold mt-3">{{  total_medicines|default:"000" }}</h3>
+            <p class="text-muted mb-3 pt-3  ">Total Stock: {{ total_stock }}</p>
+            
+        </div>
+</div>
+
+<div class="col-md-3">
+        <div class="card border-0 bg-success bg-gradient shadow-sm p-3 rounded-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted small fw-bold">💰 Sales Today</span>
+                <span class="badge bg-success-subtle text-success"><i class="bi bi-link-45deg"></i></span>
+            </div>
+            <h3 class="fw-bold mt-2">{{ today_total|default:"000" }}</h3>
+            <p class="text-muted">Transactions: {{ today_count }}</p>
+            <p class="text-muted">Profit Today: {{ today_profit }}</p>
+            
+        </div>
+</div>
+
+<div class="col-md-3">
+        <div class="card border-0 bg-info bg-gradient shadow-sm p-3 rounded-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted small fw-bold">📆 This Month</span>
+                <span class="badge bg-success-subtle text-success"><i class="bi bi-link-45deg"></i></span>
+            </div>
+            <h3 class="fw-bold mt-2">{{  month_total|default:"000" }}</h3>
+            <p class="text-muted">Transactions: {{ month_count }}</p>
+            <p class="text-muted">Profit This Month: {{ month_profit }}</p>
+            
+        </div>
+</div>
+
+
+
+<div class="col-md-3">
+    {% if low_stock.count == 0 %}
+    <div class="card border-0 bg-secondary bg-gradient shadow-sm p-3 rounded-4">
+        {% else %}
+        <div class="card border-0 bg-danger bg-gradient shadow-sm p-3 rounded-4">
+        {% endif %}
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="text-muted small fw-bold">⚠️ Low Stock</p>
+            <div class="badge bg-danger-subtle text-danger p-2 rounded-3">
+                <i class="bi bi-exclamation-triangle"></i>
+            </div>
+        </div>
+        <h2 class="fw-bold my-2">{{ low_stock.count|default:"00" }}</h2>
+        <div>
+        {% for med in low_stock %}
+        <li class="text-danger m-3">{{ med.name }} ({{ med.stock }} left)</li>
+        {% empty %}
+        <li class="text-info m-3">No low stock items</li>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+<br>
+<a class="btn btn-outline-primary" href="/medicines/">Go to Medicines</a>
+{% endblock %}
+
+</div>

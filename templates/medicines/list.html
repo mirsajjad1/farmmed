@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Medicines{% endblock %}
+
+{% block content %}
+
+
+<h2 class="mb-3">Medicines</h2>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col">
+        <input class="form-control" type="text" name="q" placeholder="Search...">
+    </div>
+
+    <div class="col">
+        <input class="form-control" type="text" name="category" placeholder="Category">
+    </div>
+
+    <div class="col">
+        <button class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+<a href="{% url 'add_medicine' %}" class="btn btn-success mb-3">+ Add Medicine</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for med in medicines %}
+        <tr>
+            <td>{{ med.name }}</td>
+            <td>{{ med.category }}</td>
+            <td>{{ med.stock }}</td>
+            <td>{{ med.price }}</td>
+
+            <td>
+                <a href="{% url 'edit_medicine' med.id %}" class="btn btn-warning btn-sm">Edit</a>
+
+                {% if request.user.role == 'admin' %}
+                <a href="{% url 'delete_medicine' med.id %}" class="btn btn-danger btn-sm">Delete</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
